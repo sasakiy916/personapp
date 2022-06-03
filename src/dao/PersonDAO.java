@@ -44,6 +44,7 @@ public class PersonDAO {
 		}
 	}
 
+	//全件取得
 	public List<Person> findAll(){
 		List<Person> list = new ArrayList<>();
 		try {
@@ -66,5 +67,38 @@ public class PersonDAO {
 			this.disconnect();
 		}
 		return list;
+	}
+
+	//一件取得
+	public Person findOne(int id) {
+		Person person = null;
+		try {
+			this.connect();
+			ps = db.prepareStatement("SELECT * FROM persons WHERE id=?");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			person = new Person(rs.getInt("id"),rs.getString("name"),rs.getInt("age"));
+		} catch (NamingException | SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}finally {
+			this.disconnect();
+		}
+		return person;
+	}
+
+	//一件新規作成
+	public void insertOne(Person person) {
+		try {
+			this.connect();
+			ps = db.prepareStatement("INSERT INTO persons(name,age) VALUES(?,?)");
+			ps.setString(1, person.getName());
+			ps.setInt(2,person.getAge());
+			ps.execute();
+		} catch (NamingException | SQLException e) {
+			e.printStackTrace();
+		}finally {
+			this.disconnect();
+		}
 	}
 }

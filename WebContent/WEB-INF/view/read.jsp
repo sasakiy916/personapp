@@ -18,7 +18,8 @@ List<Person> list = (List<Person>)request.getAttribute("list");
 <tr><td><%=person.getId() %></td>
 <td><%=person.getName() %></td>
 <td><%=person.getAge() %></td>
-<td><a href="">更新</a><a href="">削除</a></td>
+<td><a href="/personapp/Update" id=<%=person.getId() %>>更新</a>
+<a href="/personapp/Delete" id=<%=person.getId() %>>削除</a></td>
 </tr>
 <% } %>
 </table>
